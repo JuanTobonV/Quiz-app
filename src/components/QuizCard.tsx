@@ -7,34 +7,17 @@ interface QuizCardProps {
   questionLength: number;
 }
 
-interface formStateProps {
-  correctQuestion: boolean;
-  isTimeZero: boolean;
-}
-
 export default function QuizCard({ questionLength }: QuizCardProps) {
   const [timer, setTimer] = useState<number>(60);
   const [questions, setQuestions] = useState<questionsType[]>(questionData);
-  const [formStates, setFormStates] = useState<formStateProps>({
-    correctQuestion: false,
-    isTimeZero: false,
-  });
+  const [correctAnswer, setCorrectAnswer] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
+  const [selectedAnswerIndex, setSelectedAnswerIndex] = useState<number | null>(null);
 
   useEffect(() => {
-    if (timer !== 0) {
+    if (timer > 0) {
       const interval = setInterval(() => {
-        setTimer((prevTimer) => {
-          if (prevTimer === 0) {
-            clearInterval(interval);
-            setFormStates({
-              ...formStates,
-              isTimeZero: true,
-            });
-            return prevTimer;
-          }
-          return prevTimer - 1;
-        });
+        setTimer((prevTimer) => prevTimer - 1);
       }, 1000);
 
       return () => clearInterval(interval);
@@ -45,15 +28,22 @@ export default function QuizCard({ questionLength }: QuizCardProps) {
     e.preventDefault();
   };
 
-  const handleAnswerClick = () => {
-    setFormStates({
-      ...formStates,
-      correctQuestion: true,
-    });
-
-    if (currentQuestionIndex < 3) {
-      setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+  const handleAnswerClick = (answer: React.MouseEvent<HTMLButtonElement, MouseEvent>, index: number) => {
+    setSelectedAnswerIndex(index);
+    if (answer.currentTarget.textContent === questions[currentQuestionIndex].correctAnswer) {
+      console.log("Correcto");
+      setCorrectAnswer(true);
+    } else {
+      console.log("nao");
+      setCorrectAnswer(false);
     }
+
+    setTimeout(() => {
+      if (currentQuestionIndex < questionLength - 1) {
+        setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+        setSelectedAnswerIndex(null); // Reset selected answer index for the next question
+      }
+    }, 1000);
   };
 
   const currentQuestion = questions[currentQuestionIndex];
@@ -61,7 +51,7 @@ export default function QuizCard({ questionLength }: QuizCardProps) {
   return (
     <main className="bg-gray-100 w-full h-screen flex justify-center pt-24">
       <form
-        onSubmit={(e) => handleSubmit(e)}
+        onSubmit={handleSubmit}
         className="bg-white rounded-xl w-xl h-fit flex justify-center flex-col items-start p-3"
       >
         <label className="text-2xl font-bold">
@@ -75,15 +65,21 @@ export default function QuizCard({ questionLength }: QuizCardProps) {
             key={currentQuestion.id}
             className="w-full gap-2 flex flex-col items-center justify-center mt-2"
           >
-            <h1 className='text-xl'>{currentQuestion.question}</h1>
+            <h1 className="text-xl">{currentQuestion.question}</h1>
             {currentQuestion.answers.map((answer, index) => (
-              <button
+                <button
                 key={index}
-                className="bg-black p-2 text-white rounded-lg w-full cursor-pointer hover:bg-gray-900"
-                onClick={handleAnswerClick}
-              >
+                className={`p-2 rounded-lg w-full cursor-pointer ${
+                  selectedAnswerIndex === index
+                  ? currentQuestion.correctAnswer === answer
+                    ? 'bg-green-500 text-white'
+                    : 'bg-red-500 text-white'
+                  : 'bg-black text-white hover:bg-gray-900'
+                }`}
+                onClick={(e) => handleAnswerClick(e, index)}
+                >
                 {answer}
-              </button>
+                </button>
             ))}
           </div>
         )}
