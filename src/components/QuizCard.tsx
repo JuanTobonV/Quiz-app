@@ -10,8 +10,7 @@ interface QuizCardProps {
 
 export default function QuizCard({ questionLength }: QuizCardProps) {
   const [timer, setTimer] = useState<number>(60);
-  const [questions, setQuestions] = useState<questionsType[]>(questionData);
-  const [correctAnswer, setCorrectAnswer] = useState(false);
+  const [questions] = useState<questionsType[]>(questionData);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
   const [selectedAnswerIndex, setSelectedAnswerIndex] = useState<number | null>(null);
   const [userAnswers, setUserAnswers] = useState<string[]>([]);
@@ -38,12 +37,9 @@ export default function QuizCard({ questionLength }: QuizCardProps) {
     
 
     if (selectedAnswer === questions[currentQuestionIndex].correctAnswer) {
-      setCorrectAnswer(true);
-      setCounter((prevCounter) => prevCounter + 1);
-    } else {
-      setCorrectAnswer(false);
-    }
 
+      setCounter((prevCounter) => prevCounter + 1);
+    } 
     setTimeout(() => {
       if (currentQuestionIndex < questionLength) {
         setCurrentQuestionIndex((prevIndex) => prevIndex + 1);

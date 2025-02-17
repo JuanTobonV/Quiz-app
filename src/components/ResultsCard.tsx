@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 
 import { questions } from '../data/questionsData'
 import { Link } from 'react-router-dom'

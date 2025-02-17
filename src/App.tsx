@@ -3,7 +3,6 @@ import Menu from "./components/Menu"
 import Home from "./pages/Home"
 import QuizCard from "./components/QuizCard"
 import { useQuizHook } from "./hooks/quizHook"
-import ResultsCard from "./components/ResultsCard"
 function App() {
 
   const {questionLength} = useQuizHook();
