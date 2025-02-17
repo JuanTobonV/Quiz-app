@@ -16,7 +16,7 @@ function App() {
         <Routes>
           <Route path="/" element = {<Home/>}/>
           <Route path="/quiz" element = {<QuizCard questionLength={questionLenght}/>}/>
-          <Route path="/results" element = {<ResultsCard/>}/>
+          
         </Routes>
 
       </Router>
