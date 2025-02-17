@@ -15,7 +15,7 @@ export default function ResultsCard({userAnswers, questionLength, counter}:Resul
 
 
     return (
-        <main className="bg-gray-100 w-full h-screen flex justify-center pt-24">
+        <main className="bg-gray-100 w-full h-screen flex justify-center pt-24 px-2">
         <form
             className="bg-white rounded-xl w-xl h-fit flex justify-start flex-col items-start p-3"
         >

@@ -6,7 +6,7 @@ import { useQuizHook } from "./hooks/quizHook"
 import ResultsCard from "./components/ResultsCard"
 function App() {
 
-  const {questionLenght} = useQuizHook();
+  const {questionLength} = useQuizHook();
 
   return (
     <>
@@ -15,7 +15,7 @@ function App() {
 
         <Routes>
           <Route path="/" element = {<Home/>}/>
-          <Route path="/quiz" element = {<QuizCard questionLength={questionLenght}/>}/>
+          <Route path="/quiz" element = {<QuizCard questionLength={questionLength}/>}/>
           
         </Routes>
 

@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom'
 export default function Home() {
   return (
     <>
-        <main className='w-full flex gap-4 justify-center flex-col items-center bg-gray-100 py-0 px-80 h-screen'>
-            <h1 className='text-4xl font-bold'>Welcome to the Quiz App!</h1>
+        <main className='w-full flex gap-4 justify-center flex-col items-center px-2 bg-gray-100  h-screen'>
+            <h1 className='text-4xl font-bold text-center'>Welcome to the Quiz App!</h1>
             <p className='text-center text-2xl'>
                 Test your knowledge with our exciting quiz. Answer questions on various topics and see how well you score!
             </p>
